@@ -95,6 +95,27 @@ export const FirebaseProvider = (props) => {
     }
   };
 
+  //save history to firebase
+  const saveHistoryToFirebase = (history) => {
+    if (user) {
+      const historyRef = ref(firebaseDatabase, `history/${user.uid}`);
+      return set(historyRef, history);
+    }
+  };
+
+  //fetch histoery from firebase
+  const fetchHistoryFromFirebase = async () => {
+    if (user) {
+      const dbRef = ref(firebaseDatabase);
+      const snapshot = await get(child(dbRef, `history/${user.uid}`));
+      if (snapshot.exists()) {
+        return snapshot.val();
+      }
+      return [];
+    }
+  };
+
+
   // Checking if user is logged in or not
   const isLoggedIn = user ? true : false;
   
@@ -109,6 +130,8 @@ export const FirebaseProvider = (props) => {
         updatePasswordForUser,
         saveTodosToFirebase,
         fetchTodosFromFirebase,
+        saveHistoryToFirebase,
+        fetchHistoryFromFirebase,
         isLoggedIn,
         pic,
         user, 
@@ -117,4 +140,4 @@ export const FirebaseProvider = (props) => {
       {props.children}
     </FirebaseContext.Provider>
   );
-};
+}

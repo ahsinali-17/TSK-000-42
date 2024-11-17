@@ -13,6 +13,7 @@ const Navbar = () => {
     if (!firebase.isLoggedIn) {
       navigate("/");
     }
+    console.log(firebase.pic)
   }, [firebase, navigate]);
 
   return (
@@ -20,22 +21,22 @@ const Navbar = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center">
-            <div className="text-xl font-bold cursor-pointer text-red-500">
+            <Link to="/" className="text-xl font-bold cursor-pointer text-red-500 hover:text-white">
               TSK-000-42
-            </div>
+            </Link>
           </div>
           <div className="flex space-x-4">
-            <Link
-              className="text-gray-300 hover:text-red-600 px-3 py-2 rounded-md text-sm font-medium"
-              to="/home"
-            >
-              Home
-            </Link>
             <Link
               className="text-gray-300 hover:text-red-600 px-3 py-2 rounded-md text-sm font-medium"
               to="/list"
             >
               Todos
+            </Link>
+            <Link
+              className="text-gray-300 hover:text-red-600 px-3 py-2 rounded-md text-sm font-medium"
+              to="/history"
+            >
+              History
             </Link>
 
             <button className=" max-w-32 max-h-32 text-gray-500 hover:text-red-500 bg-transparent rounded-full text-sm font-medium cursor-pointer overflow-hidden">

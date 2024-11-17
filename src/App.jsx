@@ -5,6 +5,7 @@ import Login from './components/Login'
 import Navbar from './components/Navbar'
 import Todos from './components/Todos'
 import Home from './components/Home'
+import History from './components/History'
 const App = () => {
   let router = createBrowserRouter([
     {
@@ -23,6 +24,14 @@ const App = () => {
        <Home/>
        </>  
    },
+   {
+    path:'/history',
+    element:
+    <>
+     <Navbar/> 
+     <History/>
+     </>  
+ },
    {
     path:'/list',
     element:<> <Navbar/> <Todos/></>

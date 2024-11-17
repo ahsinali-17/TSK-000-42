@@ -8,15 +8,18 @@ export default function Todos() {
   const [showFinished, setShowFinished] = useState(false);
   const [btnText, setBtnText] = useState("Show Done");
   const [history, setHistory] = useState([]);
-  const { user, saveTodosToFirebase, fetchTodosFromFirebase } = useFirebase();
+  const { user, saveTodosToFirebase, fetchTodosFromFirebase, saveHistoryToFirebase, fetchHistoryFromFirebase } = useFirebase();
 
   useEffect(() => {
     if (user) {
       fetchTodosFromFirebase().then((savedTodos) => {
         setTodos(savedTodos || []);
       });
+      fetchHistoryFromFirebase().then((savedHistory) => {
+        setHistory(savedHistory || []);
+      });
     }
-  }, [user, fetchTodosFromFirebase]);
+  }, [user, saveTodosToFirebase, saveHistoryToFirebase]);
 
   const saveToFirebase = (updatedTodos) => {
     setTodos(updatedTodos);
@@ -51,7 +54,7 @@ export default function Todos() {
     if (window.confirm("Do you really want to delete this task?")) {
       saveToFirebase(temp);
       setHistory([...history, ...deleted]);
-      // Optionally save history to Firebase
+      saveHistoryToFirebase([...history,...deleted]);
     }
   };
 
