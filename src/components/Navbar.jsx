@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useFirebase } from "../Context/Firebase";
 const Navbar = () => {
-  const firebase = useFirebase();
+  const {isLoggedIn, user , pic, logout} = useFirebase();
   const navigate = useNavigate();
   const [showMenu, setshowMenu] = useState(false);
   const [show,setShow] = useState(false)
@@ -10,11 +10,11 @@ const Navbar = () => {
   const [newPass, setNewPass] = useState("");
 
   useEffect(() => {
-    if (!firebase.isLoggedIn) {
+    if (!isLoggedIn) {
       navigate("/");
     }
-    console.log(firebase.pic)
-  }, [firebase, navigate]);
+    console.log(pic)
+  }, [pic, user, navigate, isLoggedIn]);
 
   return (
     <nav className="bg-black text-white">
@@ -41,7 +41,7 @@ const Navbar = () => {
 
             <button className=" max-w-32 max-h-32 text-gray-500 hover:text-red-500 bg-transparent rounded-full text-sm font-medium cursor-pointer overflow-hidden">
               <img
-                src={firebase.pic ? firebase.pic : "src\\assets\\download.png"}
+                src={pic ? pic : "src\\assets\\download.png"}
                 width={32}
                 className="rounded-full"
                 onClick={() => {
@@ -56,8 +56,8 @@ const Navbar = () => {
             <li
               className="text-gray-500 hover:text-red-500 px-3 py-2 text-sm text-center font-medium cursor-pointer"
               onClick={async () => {
-                if (firebase.isLoggedIn) {
-                  await firebase.logout();
+                if (isLoggedIn) {
+                  await logout();
                 } else {
                   alert("Log in First");
                 }
@@ -69,7 +69,7 @@ const Navbar = () => {
             <li
               className="text-gray-500 hover:text-red-500 px-3 py-2 text-sm font-medium text-center cursor-pointer"
               onClick={() => {
-                if (firebase.user && firebase.user.providerData[0].providerId === 'google.com') {
+                if (user && user.providerData[0].providerId === 'google.com') {
                   window.open("https://myaccount.google.com/security", "_blank");
                 } else {
                   setShowNewPass(!showNewPass);
