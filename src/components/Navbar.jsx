@@ -13,8 +13,7 @@ const Navbar = () => {
     if (!isLoggedIn) {
       navigate("/");
     }
-    console.log(pic)
-  }, [pic, user, navigate, isLoggedIn]);
+  }, [isLoggedIn]);
 
   return (
     <nav className="bg-black text-white">
@@ -39,11 +38,13 @@ const Navbar = () => {
               History
             </Link>
 
-            <button className=" max-w-32 max-h-32 text-gray-500 hover:text-red-500 bg-transparent rounded-full text-sm font-medium cursor-pointer overflow-hidden">
+            <button className=" max-w-32 max-h-32 text-gray-500 hover:text-red-500 bg-transparent text-xs font-medium cursor-pointer rounded-full">
+             
               <img
-                src={pic ? pic : "src\\assets\\download.png"}
+                src= {pic ? pic : "/download.png"}
                 width={32}
                 className="rounded-full"
+                alt={user ? user.displayName : "User"}
                 onClick={() => {
                   setshowMenu(!showMenu);
                 }}
@@ -110,8 +111,8 @@ const Navbar = () => {
                   <img
                     src={
                       show
-                        ? "src\\assets\\closed-eye.svg"
-                        : "src\\assets\\eye.svg"
+                        ? "../src/assets/closed-eye.svg"
+                        : "../src/assets/eye.svg"
                     }
                     className="cursor-pointer w-1/5"
                     onClick={() => {
